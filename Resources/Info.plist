@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+<key>CFBundleIdentifier</key><string>studio.lillywerkstatt.platzwart</string>
+<key>CFBundleExecutable</key><string>Platzwart</string>
+<key>CFBundleName</key><string>Platzwart</string>
+<key>CFBundleDisplayName</key><string>Platzwart</string>
+<key>CFBundleIconFile</key><string>AppIcon</string>
+<key>CFBundlePackageType</key><string>APPL</string>
+<key>CFBundleVersion</key><string>3</string>
+<key>CFBundleShortVersionString</key><string>0.3.0</string>
+<key>LSMinimumSystemVersion</key><string>14.0</string>
+<key>LSApplicationCategoryType</key><string>public.app-category.utilities</string>
+<key>NSDesktopFolderUsageDescription</key><string>Platzwart zeigt, was auf deinem Schreibtisch liegt und wohin es passt. Verschoben wird nur nach deiner Bestätigung, hochgeladen wird nichts.</string>
+<key>NSDocumentsFolderUsageDescription</key><string>Platzwart zeigt deine Dokument-Ordner und schlägt passende Ablageorte vor. Verschoben wird nur nach deiner Bestätigung, hochgeladen wird nichts.</string>
+<key>NSDownloadsFolderUsageDescription</key><string>Platzwart zeigt, was in deinen Downloads liegt und wohin es passt. Verschoben wird nur nach deiner Bestätigung, hochgeladen wird nichts.</string>
+<key>NSPrincipalClass</key><string>NSApplication</string>
+</dict></plist>
