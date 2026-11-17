@@ -6,7 +6,7 @@ Platzwart ist eine kleine Mac-App, die dir auf einen Blick zeigt:
 
 - **Wohin damit?** Du wählst eine Datei aus, Platzwart schlägt die Ordner vor, in denen schon ähnliche Dateien liegen. Du entscheidest: *Hierhin verschieben*, *Anderer Ordner …*, *Nicht verschieben* oder *In den Papierkorb*.
 - **Auslastung:** Speicherplatz, Speicherdruck und Prozessor, live.
-- **Ordnerübersicht:** Schreibtisch, Dokumente, Downloads und iCloud Drive als Baum, mit Größe, Anzahl der Dateien und wann zuletzt etwas geändert wurde. So siehst du sofort, welche Ordner es schon gibt und wo ein neues Dokument hinpasst.
+- **Wo liegt wie viel?** Schreibtisch, Dokumente, Downloads und iCloud Drive als Baum, mit Größe, Anzahl der Dateien und wann zuletzt etwas geändert wurde. So siehst du sofort, welche Ordner es schon gibt und wo ein neues Dokument hinpasst.
 - **Empfehlungen:** Hinweise, wo sich Aufräumen lohnt, zum Beispiel alte Downloads, sehr große Dateien oder vermutlich doppelte Dateien.
 
 ## Versprochen
@@ -18,7 +18,7 @@ Platzwart ist eine kleine Mac-App, die dir auf einen Blick zeigt:
 
 ## Installation
 
-1. Lade unter **Releases** die neueste ZIP-Datei herunter (z. B. `Platzwart-0.4.0-Testversion-Apple-Silicon.zip`) und entpacke sie.
+1. Lade unter **Releases** die neueste ZIP-Datei herunter (z. B. `Platzwart-0.4.1-Testversion-Apple-Silicon.zip`) und entpacke sie.
 2. Ziehe `Platzwart.app` in deinen Ordner **Programme**.
 3. Öffne die App per Doppelklick.
 
@@ -34,7 +34,7 @@ Beim ersten Durchsuchen fragt macOS, ob Platzwart auf Schreibtisch, Dokumente un
 | Herumliegende Dateien durchgehen | Unten **Liegt noch rum**, Datei anklicken → *Wohin damit?* |
 | Datei aus einer Empfehlung einsortieren | *Dateien anzeigen* → *Wohin damit?* |
 | Datei wegwerfen, z. B. ein Duplikat | *Wohin damit?* → **In den Papierkorb** → bestätigen |
-| Ordner im Finder öffnen | Doppelklick auf den Ordner, oder Rechtsklick → *Im Finder zeigen* |
+| Ordner im Finder öffnen | Lupe rechts neben dem Ordner, Doppelklick oder Rechtsklick → *Im Finder zeigen* |
 | Weiteren Ordner anzeigen | Symbol **Ordner hinzufügen** oben rechts |
 | Eigenen Ordner wieder entfernen | Rechtsklick → *Aus Übersicht entfernen* |
 | Neu durchsuchen | Symbol **Neu scannen** oben rechts |

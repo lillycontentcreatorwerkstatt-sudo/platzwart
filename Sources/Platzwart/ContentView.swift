@@ -27,14 +27,20 @@ struct ContentView: View {
                 .help("Weiteren Ordner zur Übersicht hinzufügen")
             }
             ToolbarItem {
-                Button {
-                    stats.readDisk()
-                    store.rescan()
-                } label: {
-                    Label("Neu scannen", systemImage: "arrow.clockwise")
+                if store.isScanning {
+                    ProgressView()
+                        .controlSize(.small)
+                        .padding(.horizontal, 8)
+                        .help("Platzwart durchsucht deine Ordner gerade. Das dauert ein paar Minuten.")
+                } else {
+                    Button {
+                        stats.readDisk()
+                        store.rescan()
+                    } label: {
+                        Label("Neu scannen", systemImage: "arrow.clockwise")
+                    }
+                    .help("Ordner neu durchsuchen")
                 }
-                .disabled(store.isScanning)
-                .help("Ordner neu durchsuchen")
             }
         }
         .sheet(item: $placement.pendingFile) { pending in
@@ -50,6 +56,10 @@ struct ContentView: View {
         .task {
             // Das letzte Ergebnis wird sofort gezeigt, aktualisiert wird im Hintergrund.
             store.rescan()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+            // Zurück aus dem Finder: Gelöschtes sofort ausblenden, ohne auf den nächsten Durchlauf zu warten.
+            store.removeMissing()
         }
     }
 }
@@ -176,11 +186,11 @@ struct FolderTreeView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                Text("Ordner").font(.headline)
+                Text("Wo liegt wie viel?").font(.headline)
                 Spacer()
                 if store.isScanning {
                     ProgressView().controlSize(.small)
-                    Text("Durchsuche … \(store.scannedFiles) Dateien")
+                    Text("Durchsuche … \(store.scannedFiles) Dateien (dauert ein paar Minuten)")
                         .font(.caption).foregroundStyle(.secondary)
                 }
             }
@@ -230,6 +240,13 @@ struct FolderRow: View {
                     .help("\(node.fileCount) Dateien")
                 ShareBar(share: node.share)
                     .frame(width: 44, height: 6)
+                Button {
+                    FolderStore.revealInFinder(node.url)
+                } label: {
+                    Image(systemName: "magnifyingglass")
+                }
+                .buttonStyle(.borderless)
+                .help("Im Finder zeigen")
             }
             .fixedSize()
         }
