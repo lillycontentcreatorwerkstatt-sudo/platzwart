@@ -135,10 +135,49 @@ final class PlacementController: ObservableObject {
         return move(file, to: target)
     }
 
-    private func showError(_ text: String) {
+    // MARK: - Papierkorb
+
+    /// Legt die Datei nach Rückfrage in den macOS-Papierkorb (nicht endgültig gelöscht).
+    /// Gibt `true` zurück, wenn sie im Papierkorb gelandet ist.
+    func moveToTrash(_ file: URL) -> Bool {
+        let confirm = NSAlert()
+        confirm.messageText = "„\(file.lastPathComponent)“ in den Papierkorb legen?"
+        confirm.informativeText = "Du kannst die Datei im Finder aus dem Papierkorb zurücklegen."
+        confirm.addButton(withTitle: "In den Papierkorb").hasDestructiveAction = true
+        confirm.addButton(withTitle: "Abbrechen")
+        guard confirm.runModal() == .alertFirstButtonReturn else { return false }
+        do {
+            try FileManager.default.trashItem(at: file, resultingItemURL: nil)
+        } catch {
+            // Dateien in iCloud-Ordnern (z. B. „Dokumente“ mit iCloud-Sync) darf Platzwart oft nicht
+            // selbst in den Papierkorb legen. Dann übernimmt der Finder – macOS fragt einmal nach Erlaubnis.
+            if let finderError = trashWithFinder(file) {
+                showError("In den Papierkorb legen hat nicht geklappt. \(finderError)",
+                          title: "Nicht in den Papierkorb gelegt")
+                return false
+            }
+        }
+        looseFiles.removeAll { $0.url == file }
+        return true
+    }
+
+    /// Bittet den Finder, die Datei in den Papierkorb zu legen. Gibt bei Erfolg `nil` zurück, sonst den Grund.
+    private func trashWithFinder(_ file: URL) -> String? {
+        let path = file.path.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "\"", with: "\\\"")
+        var error: NSDictionary?
+        NSAppleScript(source: "tell application \"Finder\" to delete (POSIX file \"\(path)\" as alias)")?
+            .executeAndReturnError(&error)
+        if !FileManager.default.fileExists(atPath: file.path) { return nil }
+        if (error?[NSAppleScript.errorNumber] as? Int) == -1743 {
+            return "Platzwart darf den Finder nicht steuern. Erlaube es unter Systemeinstellungen → Datenschutz & Sicherheit → Automation → Platzwart → Finder."
+        }
+        return (error?[NSAppleScript.errorMessage] as? String) ?? "Der Finder konnte die Datei nicht in den Papierkorb legen."
+    }
+
+    private func showError(_ text: String, title: String = "Nicht verschoben") {
         let alert = NSAlert()
         alert.alertStyle = .warning
-        alert.messageText = "Nicht verschoben"
+        alert.messageText = title
         alert.informativeText = text
         alert.runModal()
     }
@@ -194,21 +233,26 @@ struct PlacementPanel: View {
             HStack {
                 Button("Nicht verschieben") { onDone() }
                     .keyboardShortcut(.cancelAction)
+                Button {
+                    if placement.moveToTrash(file) { store.forget(file); onDone() }
+                } label: {
+                    Label("In den Papierkorb", systemImage: "trash")
+                }
                 Spacer()
                 Button("Anderer Ordner …") {
                     let start = suggestions.first { $0.id == selected }.map { URL(fileURLWithPath: $0.folder.path) }
-                    if placement.moveToChosenFolder(file, startingAt: start) { onDone() }
+                    if placement.moveToChosenFolder(file, startingAt: start) { store.forget(file); onDone() }
                 }
                 Button("Hierhin verschieben") {
                     guard let choice = suggestions.first(where: { $0.id == selected }) else { return }
-                    if placement.move(file, to: URL(fileURLWithPath: choice.folder.path)) { onDone() }
+                    if placement.move(file, to: URL(fileURLWithPath: choice.folder.path)) { store.forget(file); onDone() }
                 }
                 .keyboardShortcut(.defaultAction)
                 .disabled(selected == nil)
             }
         }
         .padding(20)
-        .frame(width: 580)
+        .frame(width: 720)
         .onAppear {
             suggestions = placement.suggestions(for: file, index: store.result?.index)
             selected = suggestions.first?.id

@@ -10,6 +10,8 @@ final class FolderStore: ObservableObject {
     }
 
     private static let customKey = "eigeneOrdner"
+    /// Dateien, die während eines laufenden Scans verschoben oder weggeworfen wurden.
+    private var forgottenDuringScan = Set<String>()
 
     init() {
         customPaths = UserDefaults.standard.stringArray(forKey: Self.customKey) ?? []
@@ -70,19 +72,42 @@ final class FolderStore: ObservableObject {
         guard !isScanning else { return }
         isScanning = true
         scannedFiles = 0
+        forgottenDuringScan = []
         let locations = locations()
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             let scanner = FolderScanner()
             scanner.onProgress = { count in
                 DispatchQueue.main.async { self?.scannedFiles = count }
             }
-            let result = scanner.run(locations)
-            Self.saveCache(result)
+            let scanned = scanner.run(locations)
             DispatchQueue.main.async {
-                self?.result = result
-                self?.isScanning = false
+                guard let self else { return }
+                let result = Self.removing(self.forgottenDuringScan, from: scanned)
+                self.result = result
+                self.isScanning = false
+                DispatchQueue.global(qos: .utility).async { Self.saveCache(result) }
             }
         }
+    }
+
+    /// Nimmt eine verschobene oder weggeworfene Datei sofort aus den Empfehlungen, ohne neu zu scannen.
+    func forget(_ url: URL) {
+        if isScanning { forgottenDuringScan.insert(url.path) }
+        guard let current = result else { return }
+        let updated = Self.removing([url.path], from: current)
+        result = updated
+        DispatchQueue.global(qos: .utility).async { Self.saveCache(updated) }
+    }
+
+    private static func removing(_ paths: Set<String>, from result: ScanResult) -> ScanResult {
+        guard !paths.isEmpty else { return result }
+        var updated = result
+        updated.largeFiles.removeAll { paths.contains($0.url.path) }
+        updated.oldDownloads.removeAll { paths.contains($0.url.path) }
+        updated.duplicates = updated.duplicates
+            .map { group in group.filter { !paths.contains($0.url.path) } }
+            .filter { $0.count > 1 }
+        return updated
     }
 
     func addFolder() {

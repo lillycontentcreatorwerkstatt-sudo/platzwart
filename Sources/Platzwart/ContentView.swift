@@ -81,7 +81,7 @@ struct BottomBar: View {
                     .font(.caption)
             }
             Spacer()
-            Text("Platzwart löscht nichts und verschiebt nur, wenn du es sagst.")
+            Text("Platzwart löscht nichts endgültig und handelt nur, wenn du es sagst.")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }

@@ -4,21 +4,21 @@
 
 Platzwart ist eine kleine Mac-App, die dir auf einen Blick zeigt:
 
-- **Wohin damit?** Du wählst eine Datei aus, Platzwart schlägt die Ordner vor, in denen schon ähnliche Dateien liegen. Du entscheidest: *Hierhin verschieben*, *Anderer Ordner …* oder *Nicht verschieben*.
+- **Wohin damit?** Du wählst eine Datei aus, Platzwart schlägt die Ordner vor, in denen schon ähnliche Dateien liegen. Du entscheidest: *Hierhin verschieben*, *Anderer Ordner …*, *Nicht verschieben* oder *In den Papierkorb*.
 - **Auslastung:** Speicherplatz, Speicherdruck und Prozessor, live.
 - **Ordnerübersicht:** Schreibtisch, Dokumente, Downloads und iCloud Drive als Baum, mit Größe, Anzahl der Dateien und wann zuletzt etwas geändert wurde. So siehst du sofort, welche Ordner es schon gibt und wo ein neues Dokument hinpasst.
 - **Empfehlungen:** Hinweise, wo sich Aufräumen lohnt, zum Beispiel alte Downloads, sehr große Dateien oder vermutlich doppelte Dateien.
 
 ## Versprochen
 
-- **Platzwart löscht nichts.** Was weg kann, entscheidest du selbst im Finder.
+- **Platzwart löscht nichts endgültig.** Eine Datei landet nur im Papierkorb von macOS, wenn du auf *In den Papierkorb* klickst und es bestätigst. Von dort kannst du sie im Finder zurücklegen.
 - **Verschoben wird nur, wenn du es sagst.** Liegt im Zielordner schon eine Datei mit gleichem Namen, verschiebt Platzwart nicht und sagt dir Bescheid.
 - **Alles bleibt auf deinem Mac.** Keine Internetverbindung, kein Konto, keine Datenübertragung. Damit die App sofort startet, merkt sie sich das letzte Ergebnis unter `~/Library/Application Support/Platzwart/`.
 - **Offener Quellcode** unter MIT-Lizenz. Jeder kann nachlesen, was die App tut.
 
 ## Installation
 
-1. Lade unter **Releases** die neueste ZIP-Datei herunter (z. B. `Platzwart-0.3.0-Testversion-Apple-Silicon.zip`) und entpacke sie.
+1. Lade unter **Releases** die neueste ZIP-Datei herunter (z. B. `Platzwart-0.4.0-Testversion-Apple-Silicon.zip`) und entpacke sie.
 2. Ziehe `Platzwart.app` in deinen Ordner **Programme**.
 3. Öffne die App per Doppelklick.
 
@@ -33,6 +33,7 @@ Beim ersten Durchsuchen fragt macOS, ob Platzwart auf Schreibtisch, Dokumente un
 | Eine Datei einsortieren | Unten **Datei einsortieren …**, Datei wählen, Vorschlag anklicken |
 | Herumliegende Dateien durchgehen | Unten **Liegt noch rum**, Datei anklicken → *Wohin damit?* |
 | Datei aus einer Empfehlung einsortieren | *Dateien anzeigen* → *Wohin damit?* |
+| Datei wegwerfen, z. B. ein Duplikat | *Wohin damit?* → **In den Papierkorb** → bestätigen |
 | Ordner im Finder öffnen | Doppelklick auf den Ordner, oder Rechtsklick → *Im Finder zeigen* |
 | Weiteren Ordner anzeigen | Symbol **Ordner hinzufügen** oben rechts |
 | Eigenen Ordner wieder entfernen | Rechtsklick → *Aus Übersicht entfernen* |

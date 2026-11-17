@@ -38,7 +38,7 @@ enum Recommendations {
                     id: "downloads",
                 level: .hinweis,
                 title: "Downloads: \(bytes(oldSize)) älter als \(days) Tage",
-                detail: "\(result.oldDownloads.count) Dateien wurden seit über \(days) Tagen nicht geändert. Ausmisten oder in einen passenden Ordner verschieben.",
+                detail: "\(files(result.oldDownloads.count)) \(result.oldDownloads.count == 1 ? "wurde" : "wurden") seit über \(days) Tagen nicht geändert. Ausmisten oder in einen passenden Ordner verschieben.",
                 files: Array(result.oldDownloads.prefix(maxFilesShown))
             ))
         }
@@ -49,7 +49,7 @@ enum Recommendations {
             list.append(Recommendation(
                     id: "gross",
                 level: .hinweis,
-                title: "\(result.largeFiles.count) Dateien über 1 GB",
+                title: "\(files(result.largeFiles.count)) über 1 GB",
                 detail: "Zusammen \(bytes(total)). Brauchst du die noch hier, oder können sie auf eine externe Festplatte?",
                 files: Array(result.largeFiles.prefix(maxFilesShown))
             ))
@@ -63,13 +63,18 @@ enum Recommendations {
             list.append(Recommendation(
                     id: "doppelt",
                 level: .hinweis,
-                title: "\(result.duplicates.count) Dateien vermutlich doppelt",
+                title: "\(files(result.duplicates.count)) vermutlich doppelt",
                 detail: "Gleicher Name und gleiche Größe an mehreren Stellen. Möglicher Gewinn: \(bytes(wasted)). Vor dem Löschen kurz prüfen.",
                 files: Array(result.duplicates.prefix(maxFilesShown).flatMap { $0 })
             ))
         }
 
         return list
+    }
+
+    /// „1 Datei“ / „3 Dateien“
+    static func files(_ count: Int) -> String {
+        count == 1 ? "1 Datei" : "\(count) Dateien"
     }
 
     static func bytes(_ value: Int64) -> String {

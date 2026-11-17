@@ -7,12 +7,13 @@
 <key>CFBundleDisplayName</key><string>Platzwart</string>
 <key>CFBundleIconFile</key><string>AppIcon</string>
 <key>CFBundlePackageType</key><string>APPL</string>
-<key>CFBundleVersion</key><string>3</string>
-<key>CFBundleShortVersionString</key><string>0.3.0</string>
+<key>CFBundleVersion</key><string>4</string>
+<key>CFBundleShortVersionString</key><string>0.4.0</string>
 <key>LSMinimumSystemVersion</key><string>14.0</string>
 <key>LSApplicationCategoryType</key><string>public.app-category.utilities</string>
 <key>NSDesktopFolderUsageDescription</key><string>Platzwart zeigt, was auf deinem Schreibtisch liegt und wohin es passt. Verschoben wird nur nach deiner Bestätigung, hochgeladen wird nichts.</string>
 <key>NSDocumentsFolderUsageDescription</key><string>Platzwart zeigt deine Dokument-Ordner und schlägt passende Ablageorte vor. Verschoben wird nur nach deiner Bestätigung, hochgeladen wird nichts.</string>
 <key>NSDownloadsFolderUsageDescription</key><string>Platzwart zeigt, was in deinen Downloads liegt und wohin es passt. Verschoben wird nur nach deiner Bestätigung, hochgeladen wird nichts.</string>
+<key>NSAppleEventsUsageDescription</key><string>Platzwart bittet den Finder, Dateien aus iCloud-Ordnern in den Papierkorb zu legen. Das passiert nur, wenn du auf „In den Papierkorb“ klickst und es bestätigst.</string>
 <key>NSPrincipalClass</key><string>NSApplication</string>
 </dict></plist>
